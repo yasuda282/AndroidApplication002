@@ -34,14 +34,17 @@ public class MainActivity extends AppCompatActivity {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-
+            try {
+                Thread.sleep(3000); // 3秒間だけ処理を止める
+            } catch (InterruptedException ignored) {
+            }
         }
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             return;
+        } else {
+            TelephonyManager manager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+            String deviceId = manager.getDeviceId();
+            myWebView.loadUrl("https://stg.sapocha-sys-crew01.info/?crew_code=9001000002&shop_code=SAPOCHA01");
         }
-        TelephonyManager manager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        String deviceId = manager.getDeviceId();
-
-        myWebView.loadUrl("https://stg.sapocha-sys-crew01.info/?crew_code=9001000002&shop_code=SAPOCHA01");
     }
 }
